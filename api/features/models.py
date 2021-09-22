@@ -75,7 +75,6 @@ class Feature(CustomLifecycleModelMixin, models.Model):
     type = models.CharField(max_length=50, null=True, blank=True)
     history = HistoricalRecords()
     tags = models.ManyToManyField(Tag, blank=True)
-    # TODO: for the lack of a better word
     owners = models.ManyToManyField("users.FFAdminUser", related_name="owned_features")
 
     class Meta:
@@ -96,7 +95,7 @@ class Feature(CustomLifecycleModelMixin, models.Model):
                 enabled=self.default_enabled,
             )
 
-    def add_owners_by_id(self, owner_ids: typing.List):
+    def add_owners_by_id(self, owner_ids: []):
         from users.models import FFAdminUser
 
         owners_to_add = []
@@ -112,7 +111,7 @@ class Feature(CustomLifecycleModelMixin, models.Model):
             owners_to_add.append(user)
         self.owners.add(*owners_to_add)
 
-    def remove_owners_by_id(self, owner_ids: typing.List):
+    def remove_owners_by_id(self, owner_ids: []):
         self.owners.remove(*owner_ids)
 
     def validate_unique(self, *args, **kwargs):
